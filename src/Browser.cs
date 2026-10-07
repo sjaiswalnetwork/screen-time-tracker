@@ -121,18 +121,57 @@ static class Browser
     static string reqKey, reqTitle;
     static Thread worker;
 
+    // ---- private / incognito windows ----
+    // Chrome and Brave don't say "incognito" in the window title, so each browser window is checked once for the
+    // toolbar button only private windows have ("Incognito" in Chrome, "You're Private" in Brave, "InPrivate" in Edge).
+    // Until a window has been checked, nothing about its pages is recorded.
+    static readonly ConcurrentDictionary<IntPtr, bool> privateWindows = new ConcurrentDictionary<IntPtr, bool>();
+    static IntPtr reqPrivate;
+
+    /// true = private, false = normal, null = not checked yet (a check is started).
+    public static bool? IsPrivateWindow(IntPtr hwnd)
+    {
+        bool v;
+        if (privateWindows.TryGetValue(hwnd, out v)) return v;
+        lock (gate) reqPrivate = hwnd;
+        StartWorker();
+        signal.Set();
+        return null;
+    }
+
+    public static bool CheckPrivateNow(IntPtr h)
+    {
+        var root = AutomationElement.FromHandle(h);
+        var buttons = root.FindAll(TreeScope.Descendants, new PropertyCondition(AutomationElement.ControlTypeProperty, ControlType.Button));
+        foreach (AutomationElement b in buttons)
+        {
+            string n = b.Current.Name ?? "";
+            if (n.Equals("Incognito", StringComparison.OrdinalIgnoreCase) || n.IndexOf("InPrivate", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                n.IndexOf("You're Private", StringComparison.OrdinalIgnoreCase) >= 0 || n.IndexOf("You’re Private", StringComparison.OrdinalIgnoreCase) >= 0 ||
+                n.IndexOf("Private window", StringComparison.OrdinalIgnoreCase) >= 0 || n.IndexOf("Private browsing", StringComparison.OrdinalIgnoreCase) >= 0)
+                return true;
+        }
+        return false;
+    }
+
     public static void Request(IntPtr hwnd, string itemKey, string rawTitle)
     {
         lock (gate) { reqHwnd = hwnd; reqKey = itemKey; reqTitle = rawTitle; }
-        if (worker == null)
+        StartWorker();
+        signal.Set();
+    }
+
+    static void StartWorker()
+    {
+        lock (gate)
         {
+            if (worker != null) return;
             worker = new Thread(Loop);
             worker.IsBackground = true;
             worker.Name = "address-bar";
             worker.SetApartmentState(ApartmentState.MTA);
             worker.Start();
         }
-        signal.Set();
     }
 
     static void Loop()
@@ -141,9 +180,21 @@ static class Browser
         while (true)
         {
             signal.WaitOne();
+            IntPtr ph;
+            lock (gate) { ph = reqPrivate; reqPrivate = IntPtr.Zero; }
+            if (ph != IntPtr.Zero && !privateWindows.ContainsKey(ph))
+            {
+                bool isPrivate;
+                try { isPrivate = CheckPrivateNow(ph); }
+                catch { isPrivate = true; } // can't tell -> treat as private (safe side)
+                if (privateWindows.Count > 500) privateWindows.Clear();
+                privateWindows[ph] = isPrivate;
+            }
             IntPtr h; string key, title;
-            lock (gate) { h = reqHwnd; key = reqKey; title = reqTitle; }
+            lock (gate) { h = reqHwnd; key = reqKey; title = reqTitle; reqKey = null; }
             if (key == null || Resolved.ContainsKey(key)) continue;
+            bool priv;
+            if (privateWindows.TryGetValue(h, out priv) && priv) continue;
             try
             {
                 string url = ReadUrl(h, edits);

@@ -126,14 +126,15 @@ public static class Program
         AppDomain.CurrentDomain.UnhandledException += (s, e) => LogError(e.ExceptionObject as Exception);
 
         bool created;
-        using (var mutex = new Mutex(true, MutexName, out created))
+        string suffix = dataDir == null ? "" : "." + ((uint)dataDir.ToLowerInvariant().GetHashCode()).ToString("x"); // test copies run alongside the real one
+        using (var mutex = new Mutex(true, MutexName + suffix, out created))
         {
             if (!created)
             {
-                try { using (var ev = EventWaitHandle.OpenExisting(ShowEventName)) ev.Set(); } catch { }
+                try { using (var ev = EventWaitHandle.OpenExisting(ShowEventName + suffix)) ev.Set(); } catch { }
                 return 0;
             }
-            using (var ev = new EventWaitHandle(false, EventResetMode.AutoReset, ShowEventName))
+            using (var ev = new EventWaitHandle(false, EventResetMode.AutoReset, ShowEventName + suffix))
             {
                 try { Application.Run(new TrayApp(minimized, ev)); }
                 catch (Exception ex)

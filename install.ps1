@@ -70,7 +70,7 @@ try {
     $un = "HKCU:\Software\Microsoft\Windows\CurrentVersion\Uninstall\ScreenTimeTracker"
     New-Item -Path $un -Force | Out-Null
     Set-ItemProperty $un DisplayName "Screen Time Tracker"
-    Set-ItemProperty $un DisplayVersion "2.0.0"
+    Set-ItemProperty $un DisplayVersion "2.0.1"
     Set-ItemProperty $un Publisher "SJ"
     Set-ItemProperty $un DisplayIcon $icon
     Set-ItemProperty $un InstallLocation $dest

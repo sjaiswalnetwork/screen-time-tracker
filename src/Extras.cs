@@ -211,7 +211,7 @@ static class Updater
     public const string Repo = "sjaiswalnetwork/screen-time-tracker";
     public static string ReleasesUrl { get { return "https://github.com/" + Repo + "/releases/latest"; } }
 
-    public const string AppVersion = "2.0.0";
+    public const string AppVersion = "2.0.1";
     public static Version Current { get { return new Version(AppVersion); } }
 
     public static void CheckAsync(Action<string> onNewer)

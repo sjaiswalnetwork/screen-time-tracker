@@ -30,6 +30,9 @@ static class SelfTest
             string url = null, err = null;
             try { url = Browser.ReadUrlNow(p.MainWindowHandle); } catch (Exception ex) { err = ex.GetType().Name; }
             string clean = Browser.Clean(title, exe, exe);
+            bool priv = false;
+            try { priv = Browser.CheckPrivateNow(p.MainWindowHandle); } catch { }
+            sb.AppendLine(exe + ": private window = " + priv);
             sb.AppendLine(exe + ": title='" + title + "' -> item='" + clean + "' url-site=" + (Browser.SiteFromUrl(url) ?? "(none)") +
                           " title-site=" + (Browser.SiteFromTitle(clean) ?? "(none)") + " (" + sw.ElapsedMilliseconds + " ms" + (err != null ? ", " + err : "") + ")");
         }

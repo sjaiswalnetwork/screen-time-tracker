@@ -160,6 +160,13 @@ class Tracker
         if (Settings.RecordTitles && key != "desktop")
         {
             string clean = Browser.Clean(title, key, name);
+            if (Browser.Is(key) && clean != Browser.PrivateLabel)
+            {
+                // Chrome/Brave incognito windows look normal in their title - ask the window itself first
+                bool? priv = Browser.IsPrivateWindow(hwnd);
+                if (priv == null) clean = "";                         // not checked yet: record no page details
+                else if (priv.Value) clean = Browser.PrivateLabel;
+            }
             if (clean.Length > 0)
             {
                 item = Today.GetItem(key, clean);
