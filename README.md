@@ -133,7 +133,7 @@ Windows <b>Settings → Apps → Installed apps → Screen Time Tracker → Unin
 
 <div align="center">
 <br>
-<b>Free &amp; open-source</b> · <a href="LICENSE">MIT License</a> · Made with ❤️ by <a href="https://github.com/sjaiswalnetwork">SJ</a>
+<b>Free &amp; open-source</b> · <a href="LICENSE">MIT License</a> · <a href="SHARE.md">Share it</a> · Made with ❤️ by <a href="https://github.com/sjaiswalnetwork">SJ</a>
 <br><br>
 <a href="https://github.com/sjaiswalnetwork/screen-time-tracker/releases/latest/download/ScreenTimeTracker.zip"><b>⬇ Download Screen Time Tracker</b></a>
 </div>
