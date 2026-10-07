@@ -1,0 +1,4 @@
+dist/
+release/
+*.tmp
+errors.log

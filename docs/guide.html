@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How to use Screen Time Tracker</title>
+<meta name="description" content="Step-by-step guide: install Screen Time Tracker, read your dashboard, make PDF reports, set up clients, focus mode, reminders and more.">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{ --bg:#f6f7fb; --surface:#fff; --surface2:#eef1f8; --text:#141824; --muted:#5d6577; --border:#e2e6ef; --accent:#4c6fff; --accent-soft:#e9eeff; --good:#16a34a; --warn:#b45309; --warn-soft:#fff4e0; }
+@media (prefers-color-scheme: dark){ :root{ --bg:#0d1016; --surface:#161a22; --surface2:#1d222c; --text:#eceef4; --muted:#9aa2b2; --border:#272c37; --accent:#7c9cff; --accent-soft:#1f2745; --warn:#fbbf24; --warn-soft:#2b2412; } }
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",system-ui,sans-serif;line-height:1.7;font-size:17px;-webkit-font-smoothing:antialiased}
+a{color:var(--accent)}
+img{max-width:100%;display:block;border-radius:14px;border:1px solid var(--border);box-shadow:0 14px 40px -18px rgba(30,40,90,.3);margin:18px 0}
+header{background:linear-gradient(135deg,#2a2f7a,#0f5f68);color:#fff;padding:54px 20px 46px}
+header .in{max-width:1100px;margin:0 auto;display:flex;gap:20px;align-items:center}
+header img{width:72px;height:72px;border:0;box-shadow:none;margin:0;border-radius:18px}
+header h1{margin:0;font-size:clamp(30px,5vw,44px);line-height:1.1;letter-spacing:-.02em}
+header p{margin:6px 0 0;color:rgba(255,255,255,.82);font-size:18px}
+.layout{max-width:1100px;margin:0 auto;padding:30px 20px 80px;display:grid;grid-template-columns:250px 1fr;gap:44px}
+@media (max-width:900px){.layout{grid-template-columns:1fr}.toc{position:static!important}}
+.toc{position:sticky;top:20px;align-self:start;background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:18px 18px 12px;font-size:15px}
+.toc b{display:block;margin-bottom:8px}
+.toc a{display:block;color:var(--muted);text-decoration:none;padding:4px 0}
+.toc a:hover{color:var(--text)}
+main{min-width:0}
+h2{font-size:30px;letter-spacing:-.02em;margin:54px 0 8px;line-height:1.2;scroll-margin-top:20px}
+h2:first-child{margin-top:4px}
+h2 .n{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:12px;background:linear-gradient(135deg,#5c6eff,#14b8a6);color:#fff;font-size:18px;margin-right:10px;vertical-align:4px}
+h3{font-size:20px;margin:28px 0 6px}
+.lead{color:var(--muted);font-size:18px;margin:0 0 12px}
+ol,ul{padding-left:24px}
+li{margin:6px 0}
+.box{border-radius:14px;padding:14px 18px;margin:16px 0;background:var(--accent-soft)}
+.box.warn{background:var(--warn-soft)}
+kbd{font-family:inherit;font-size:14px;background:var(--surface);border:1px solid var(--border);border-bottom-width:2px;border-radius:6px;padding:1px 7px}
+.k{display:inline-block;background:var(--surface2);border-radius:6px;padding:0 7px;font-weight:600}
+table{width:100%;border-collapse:collapse;margin:14px 0;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:16px}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--surface2);font-size:14px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+tr:last-child td{border-bottom:0}
+.dl{display:inline-block;background:linear-gradient(135deg,#5c6eff,#14b8a6);color:#fff;text-decoration:none;font-weight:600;border-radius:12px;padding:12px 22px;margin-top:16px}
+footer{text-align:center;color:var(--muted);font-size:14px;padding:0 20px 50px}
+</style>
+</head>
+<body>
+<header><div class="in">
+  <img src="img/logo.png" alt="">
+  <div><h1>How to use Screen Time Tracker</h1><p>A simple, step-by-step guide. No technical knowledge needed.</p></div>
+</div></header>
+
+<div class="layout">
+<nav class="toc"><b>Contents</b>
+  <a href="#install">1. Install</a>
+  <a href="#find">2. Find &amp; open it</a>
+  <a href="#startup">3. Start with Windows: on/off</a>
+  <a href="#day">4. Day tab</a>
+  <a href="#week">5. Week &amp; Month</a>
+  <a href="#log">6. Log tab</a>
+  <a href="#pdf">7. PDF reports</a>
+  <a href="#work">8. Clients, hours &amp; attendance</a>
+  <a href="#focus">9. Focus mode</a>
+  <a href="#reminders">10. Reminders &amp; goals</a>
+  <a href="#more">11. Handy extras</a>
+  <a href="#counting">12. How time is counted</a>
+  <a href="#settings">13. Settings explained</a>
+  <a href="#privacy">14. Privacy</a>
+  <a href="#uninstall">15. Uninstall</a>
+  <a href="#help">16. Problems?</a>
+</nav>
+
+<main>
+<h2 id="install"><span class="n">1</span>Install</h2>
+<p class="lead">You only do this once.</p>
+<ol>
+  <li><b>Download</b> <span class="k">ScreenTimeTracker.zip</span>. It goes to your <b>Downloads</b> folder.</li>
+  <li><b>Right-click</b> the zip file → <b>Extract All…</b> → <b>Extract</b>. A normal folder opens.<br><small>Don't run anything from inside the zip without extracting – it won't work.</small></li>
+  <li>Double-click <b>Install Screen Time Tracker</b>.</li>
+  <li>It asks: <b>"Start Screen Time Tracker automatically every time you turn on your PC?"</b>
+    <ul><li><b>Yes</b> (recommended): it starts by itself in the background. You never need to remember.</li>
+        <li><b>No</b>: it only runs when you open it yourself.</li></ul></li>
+  <li>That's it. It says <b>"installed and running"</b> and can open this guide for you.</li>
+</ol>
+<div class="box warn">🛡️ <b>A blue box says "Windows protected your PC"?</b> This is normal for free apps from small makers. Click <b>More info</b> and then <b>Run anyway</b>. The app is open-source: anyone can read exactly what it does.</div>
+<p>No admin password is needed. It installs only for you, in your own user folder.</p>
+
+<h2 id="find"><span class="n">2</span>Find &amp; open it</h2>
+<p>Screen Time Tracker lives as a <b>small clock icon</b> near the time, at the bottom-right of your screen. If you don't see it, click the little <b>^</b> arrow there. Once it's tracking, the icon shows today's hours, like <b>3h</b>.</p>
+<ul>
+  <li><b>Left-click</b> the icon → opens your dashboard.</li>
+  <li><b>Right-click</b> the icon → quick menu: PDF report, focus mode, pause, settings and more.</li>
+  <li>Keyboard shortcut from anywhere: <kbd>Ctrl</kbd> + <kbd>Alt</kbd> + <kbd>S</kbd>.</li>
+  <li>Or open <b>Screen Time Tracker</b> from the Start menu or the Desktop.</li>
+</ul>
+<div class="box">💡 <b>Closing the dashboard window does not stop tracking.</b> It keeps working quietly in the background. To stop completely, right-click the icon → <b>Exit</b>.</div>
+
+<h2 id="startup"><span class="n">3</span>Start with Windows: on or off</h2>
+<p>You chose this while installing, and you can change it any time in two ways:</p>
+<ul>
+  <li>Right-click the clock icon → click <b>Start automatically with Windows</b>. A tick ✓ means it's on.</li>
+  <li>Or open <b>Settings</b> (⚙ in the dashboard) → <b>General</b> → <b>Start automatically when I sign in to Windows</b>.</li>
+</ul>
+<p>When it's <b>on</b>, you never need to open it: it starts quietly every time you turn on your PC. When it's <b>off</b>, open it from the Start menu whenever you want tracking.</p>
+
+<h2 id="day"><span class="n">4</span>The Day tab</h2>
+<p class="lead">Your whole day, from top to bottom. Use the <b>&lt;</b> and <b>&gt;</b> arrows at the top to go to other days.</p>
+<img src="img/day.png" alt="Day tab">
+<table>
+  <tr><th>Part</th><th>What it tells you</th></tr>
+  <tr><td><b>Screen time</b></td><td>Total time you actually used the PC today, and the hours you were active. The coloured chip compares it with your usual amount by this time of day.</td></tr>
+  <tr><td><b>Tiles</b></td><td>Your most used app, how many apps you used, how often you switched between them, and how many times you unlocked the PC.</td></tr>
+  <tr><td><b>Insights</b></td><td><b>Focus score</b> (0–100), <b>deep work</b> (25+ minutes of steady productive work), calls, app switching, a comparison with yesterday or last week, a short <b>summary in plain words</b>, badges, goals, streaks and warnings like "YouTube 3× more than usual".</td></tr>
+  <tr><td><b>Timeline</b></td><td>Your day as a coloured strip. <b>Move the mouse over it</b> to see exactly which app and page was open at that moment. Striped parts are offline work or breaks you added.</td></tr>
+  <tr><td><b>Hourly activity</b></td><td>How many minutes you used the PC in each hour.</td></tr>
+  <tr><td><b>Categories</b></td><td>How your time splits into Productive, Communication, Entertainment, Social and Browsing.</td></tr>
+  <tr><td><b>Websites</b></td><td>Time on each website: Google Sheets, YouTube, Gmail and so on. Click a site to change its category.</td></tr>
+  <tr><td><b>Pages, sheets &amp; files</b></td><td>The exact sheet, page, document or chat. Hover to see its full name.</td></tr>
+  <tr><td><b>Apps</b></td><td>Every app you used. <b>Click an app</b> to see its pages and files, <b>set a daily limit</b> (you get a reminder when it's reached) or change its category.</td></tr>
+</table>
+
+<h2 id="week"><span class="n">5</span>Week &amp; Month tabs</h2>
+<p><b>Week</b> shows a bar for each day, your daily average, and a <b>log in / log out table</b> with the hours of each day. Click a day to open it.</p>
+<img src="img/week.png" alt="Week tab">
+<p><b>Month</b> shows a <b>calendar</b>: darker days mean more screen time, and a small orange dot means you started late. Click any day to open it. You'll also find buttons for a <b>monthly PDF</b> and a shareable <b>Screen Time Wrapped</b> picture.</p>
+<img src="img/month.png" alt="Month tab">
+
+<h2 id="log"><span class="n">6</span>The Log tab</h2>
+<p>A diary of the day, in time order:</p>
+<ul>
+  <li><b>Internet time</b>: the exact time, checked against internet time servers, so all your log times are correct. There are also <b>world clocks</b> for cities you choose in Settings.</li>
+  <li><b>Log in &amp; log out</b>: when the PC started, when you first and last used it, when you logged out, how long the PC was on, and how long you were away.</li>
+  <li><b>Activity log</b>: every app in order, with the pages and files you used, plus calls, breaks, lock, sleep, focus sessions and more. Tiny switches under 15 seconds are hidden; click the button at the top to show everything.</li>
+</ul>
+<img src="img/log.png" alt="Log tab">
+<div class="box">💡 Log-in and log-out times also come from Windows itself (start-up, shut-down, sleep and wake), so you can see them even for days before you installed the app.</div>
+
+<h2 id="pdf"><span class="n">7</span>PDF reports – any day, any time</h2>
+<ol>
+  <li>Open the dashboard and click the <b>🖨 printer button</b> at the top-right.<br><small>Or right-click the clock icon → <b>Export report (PDF)…</b></small></li>
+  <li>Choose <b>One day</b>, <b>The week of</b>, <b>The month of</b>, or <b>From … to …</b>, and pick the date.</li>
+  <li>Click <b>Create PDF</b>, choose where to save it, and it opens.</li>
+</ol>
+<p>The report includes log in and log out, first and last activity, a summary, focus score, timeline, hourly chart, categories, clients with amounts, offline work, apps, websites, pages and files, and the full activity log.</p>
+<ul>
+  <li><b>Today's report so far:</b> right-click the icon → <b>Today's report (PDF) – open now</b>.</li>
+  <li><b>Automatic weekly report:</b> every Monday, last week's PDF is saved to <b>Documents → Screen Time Reports</b>.</li>
+</ul>
+<img src="img/report-1.png" alt="PDF report page">
+
+<h2 id="work"><span class="n">8</span>Clients, hours &amp; attendance (Work tab)</h2>
+<h3>Hours per client or project</h3>
+<ol>
+  <li>Go to the <b>Work</b> tab → <b>Manage projects &amp; clients</b>.</li>
+  <li>Add a row for each client. Under <b>Keywords</b>, type words that appear in their sheet, file or website names, separated by commas. For example: <span class="k">Sharma, ST-</span>.</li>
+  <li>Optionally add an <b>hourly rate</b>, and apps that always belong to that client (for example <span class="k">tallyprime.exe</span>).</li>
+</ol>
+<p>Now the Work tab shows hours for today, this week and this month, plus amounts. Click <b>Timesheet CSV</b> to get a spreadsheet for the month, or <b>Copy work note</b> to paste "what I did today" into WhatsApp or email.</p>
+<img src="img/work.png" alt="Work tab">
+<h3>Time away from the screen</h3>
+<p>After you've been away for a while (15 minutes by default), a small box asks <b>"What were you doing?"</b>: Meeting, Phone call, Client visit, Lunch… Pick one and choose the client if it was work. It's added to your log and timesheet. You can also click <b>Add offline work or a break</b> any time.</p>
+<h3>Attendance</h3>
+<p>Set your work hours and days in <b>Settings → Work &amp; focus</b>. The Work tab then shows each day's arrival, departure, hours worked, and whether you were <b>late</b>, <b>left early</b>, did <b>overtime</b>, or were <b>absent</b>. Arrival uses your <b>first real activity</b>, so turning the PC on at 7 and starting work at 9 counts as 9.</p>
+
+<h2 id="focus"><span class="n">9</span>Focus mode</h2>
+<p>Right-click the icon → <b>Focus mode</b> → 25, 50 or 90 minutes. You can also use the Work tab. While it's on, distracting apps and websites (Entertainment and Social by default) are <b>minimised straight away</b>, with a friendly reminder. A banner shows the time left. Change what's blocked in <b>Settings → Work &amp; focus</b>.</p>
+
+<h2 id="reminders"><span class="n">10</span>Reminders &amp; goals</h2>
+<p>In <b>Settings → Goals &amp; reminders</b> you can switch on:</p>
+<ul>
+  <li><b>Break reminder</b>: for example, every 60 minutes of non-stop screen time.</li>
+  <li><b>Eye care 20-20-20</b>: every 20 minutes, look at something 20 feet away for 20 seconds.</li>
+  <li><b>Water reminder</b> and a <b>late-night warning</b>.</li>
+  <li><b>Goals</b>: maximum daily screen time, minimum productive time, maximum entertainment or social media. Progress shows in the Insights card, and you get a notification when you reach a goal.</li>
+  <li><b>Per-app limits</b>: click an app in the Apps list → <b>Set daily limit</b>.</li>
+</ul>
+
+<h2 id="more"><span class="n">11</span>Handy extras</h2>
+<ul>
+  <li><b>Search</b> (🔍 button or <kbd>Ctrl</kbd>+<kbd>F</kbd>): find any sheet, site, client or app in your history. Or ask "What was I doing at 3 PM on Tuesday?"</li>
+  <li><b>Pause</b>: right-click the icon → <b>Pause tracking</b> for 15 minutes, 30 minutes, 1 hour, or until you resume.</li>
+  <li><b>Mini widget</b>: a small always-on-top bar showing today's time. Turn it on from the icon menu, and drag it anywhere.</li>
+  <li><b>Screen Time Wrapped</b>: a shareable picture card of your month or year. Find it in the icon menu or the Month tab.</li>
+  <li><b>CSV export</b> for spreadsheets: Settings → Reports &amp; data.</li>
+  <li><b>Hindi</b> headings: Settings → General → Language.</li>
+  <li><b>Two PCs</b> (for example office and home): Settings → Reports &amp; data → share through a OneDrive folder.</li>
+</ul>
+
+<h2 id="counting"><span class="n">12</span>How time is counted</h2>
+<ul>
+  <li>Every second it checks <b>which window is in front</b> and adds that second to that app, and to the page or file inside it.</li>
+  <li><b>Away time doesn't count.</b> After 5 minutes without touching the keyboard or mouse, it stops counting and takes those 5 minutes back off.</li>
+  <li><b>Videos and calls do count</b>: if sound is playing (speakers or earphones) or your microphone is in use, you're treated as active.</li>
+  <li>Time while the PC is locked, asleep or paused isn't counted.</li>
+</ul>
+<p><b>Example:</b> you turn the PC on at 7:00, work from 9:00 to 6:00 and leave it on. You'll see <b>Log in 7:00</b>, <b>first activity 9:00</b>, <b>last activity 6:00</b>, and screen time of only your real working time. The idle hours are shown as "away".</p>
+
+<h2 id="settings"><span class="n">13</span>Settings explained</h2>
+<p>Open them with ⚙ in the dashboard, or right-click the icon → <b>Settings…</b></p>
+<table>
+  <tr><th>Tab</th><th>What you can change</th></tr>
+  <tr><td><b>General</b></td><td>Start with Windows · <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd> shortcut · hours on the tray icon · mini widget · update notices · theme (light/dark) · language · world clocks · internet time check</td></tr>
+  <tr><td><b>Tracking</b></td><td>Record page and file names (on/off) · minutes before you count as away · keep counting during videos and calls · when to ask "what were you doing?" · apps that should never be tracked</td></tr>
+  <tr><td><b>Goals &amp; reminders</b></td><td>Daily goal · productive, entertainment and social goals · break, water and 20-20-20 reminders · late-night warning</td></tr>
+  <tr><td><b>Work &amp; focus</b></td><td>Work hours and days · grace minutes · currency · projects and clients · what focus mode blocks</td></tr>
+  <tr><td><b>Reports &amp; data</b></td><td>Weekly PDF · reports folder · PDF and CSV export · backup · PIN lock · how long to keep history · sharing between two PCs · delete all history</td></tr>
+</table>
+
+<h2 id="privacy"><span class="n">14</span>Privacy</h2>
+<ul>
+  <li>Everything stays on <b>your PC</b>, in <span class="k">%APPDATA%\Screen Time Tracker</span>. Nothing is uploaded.</li>
+  <li>It records app names, window titles and website names with times. It <b>never</b> records what you type, screenshots, passwords or full web addresses.</li>
+  <li>Private / incognito windows are only noted as "Private window".</li>
+  <li>To hide an app completely: Settings → Tracking → <b>Never track these apps</b>. To lock the dashboard: Settings → Reports &amp; data → <b>PIN</b>.</li>
+  <li>The only internet use is checking the correct time and whether a new version is available.</li>
+</ul>
+
+<h2 id="uninstall"><span class="n">15</span>Uninstall</h2>
+<p>Open Windows <b>Settings → Apps → Installed apps</b>, find <b>Screen Time Tracker</b>, then <b>⋯ → Uninstall</b>. It asks whether to keep or delete your history.</p>
+
+<h2 id="help"><span class="n">16</span>Problems?</h2>
+<table>
+  <tr><th>Problem</th><th>Fix</th></tr>
+  <tr><td>I can't see the clock icon</td><td>Click the <b>^</b> arrow near the time. To keep it always visible, drag it from there onto the taskbar. Or press <kbd>Ctrl</kbd>+<kbd>Alt</kbd>+<kbd>S</kbd>.</td></tr>
+  <tr><td>It didn't start after restarting the PC</td><td>Right-click the icon (or open it from the Start menu) and make sure <b>Start automatically with Windows</b> has a tick.</td></tr>
+  <tr><td>"Windows protected your PC"</td><td>Click <b>More info → Run anyway</b>.</td></tr>
+  <tr><td>Nothing happens when I double-click Install</td><td>Make sure you <b>extracted</b> the zip first (right-click → Extract All).</td></tr>
+  <tr><td>Websites show only the page name</td><td>Leave the browser in front for a few seconds; the website name is read from the address bar.</td></tr>
+  <tr><td>Something else</td><td>Report it on <a href="https://github.com/sjaiswalnetwork/screen-time-tracker/issues">GitHub</a>. If there's an <span class="k">errors.log</span> file in the data folder, attach it.</td></tr>
+</table>
+<a class="dl" href="https://sjaiswalnetwork.github.io/screen-time-tracker/">Visit the website</a>
+</main>
+</div>
+<footer>Screen Time Tracker · free &amp; open-source · <a href="https://github.com/sjaiswalnetwork/screen-time-tracker">GitHub</a></footer>
+</body>
+</html>

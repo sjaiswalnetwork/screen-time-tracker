@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Screen Time Tracker for Windows</title>
+<meta name="description" content="A free Windows app that shows how long you use your PC, every app, website and Google Sheet, your log-in and log-out times, and gives you a PDF report of any day. Private: everything stays on your PC.">
+<meta property="og:title" content="Screen Time Tracker for Windows – free & private">
+<meta property="og:description" content="See where your day really goes: screen time per app, websites, log-in/log-out times, focus mode and PDF reports.">
+<meta property="og:image" content="https://sjaiswalnetwork.github.io/screen-time-tracker/img/wrapped.png">
+<link rel="icon" href="img/logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#f6f7fb; --surface:#ffffff; --surface2:#eef1f8; --text:#141824; --muted:#5d6577; --border:#e2e6ef;
+  --accent:#4c6fff; --accent2:#14b8a6; --accent-soft:#e9eeff; --warn:#d97706; --good:#16a34a;
+  --shadow:0 20px 50px -20px rgba(30,40,90,.25); --radius:18px;
+}
+@media (prefers-color-scheme: dark){
+  :root{ --bg:#0d1016; --surface:#161a22; --surface2:#1d222c; --text:#eceef4; --muted:#9aa2b2; --border:#272c37;
+    --accent:#7c9cff; --accent2:#2dd4bf; --accent-soft:#1f2745; --shadow:0 20px 60px -20px rgba(0,0,0,.6); }
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,"Segoe UI",system-ui,sans-serif;line-height:1.6;font-size:17px;-webkit-font-smoothing:antialiased}
+a{color:var(--accent);text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1140px;margin:0 auto;padding:0 20px}
+/* nav */
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 85%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+nav .wrap{display:flex;align-items:center;gap:24px;height:64px}
+.brand{display:flex;align-items:center;gap:10px;font-weight:700;font-size:18px;color:var(--text)}
+.brand img{width:32px;height:32px}
+nav .links{display:flex;gap:22px;margin-left:auto;font-size:15px}
+nav .links a{color:var(--muted);font-weight:500}
+nav .links a:hover{color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:12px;padding:12px 20px;font-weight:600;font-size:16px;border:1px solid transparent;transition:transform .15s,box-shadow .15s}
+.btn:hover{transform:translateY(-1px)}
+.btn.primary{background:linear-gradient(135deg,#5c6eff,#14b8a6);color:#fff;box-shadow:0 10px 30px -10px rgba(76,111,255,.7)}
+.btn.ghost{background:var(--surface);border-color:var(--border);color:var(--text)}
+.btn.big{padding:17px 30px;font-size:18px;border-radius:14px}
+.nav-dl{padding:9px 16px;font-size:14px}
+@media (max-width:760px){ nav .links{display:none} .nav-dl{margin-left:auto} }
+/* hero */
+.hero{padding:72px 0 40px;text-align:center;position:relative;overflow:hidden}
+.hero:before{content:"";position:absolute;inset:-200px -100px auto;height:600px;background:radial-gradient(600px 300px at 30% 30%,rgba(92,110,255,.18),transparent 70%),radial-gradient(500px 280px at 75% 20%,rgba(20,184,166,.16),transparent 70%);z-index:-1}
+.pill{display:inline-flex;flex-wrap:wrap;justify-content:center;max-width:100%;gap:8px;align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:6px 14px;font-size:14px;color:var(--muted);font-weight:500}
+.pill b{color:var(--good)}
+h1{font-size:clamp(36px,6vw,64px);line-height:1.08;letter-spacing:-.03em;margin:22px auto 18px;max-width:880px;font-weight:800}
+h1 span{background:linear-gradient(135deg,#5c6eff,#14b8a6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:clamp(18px,2.2vw,21px);color:var(--muted);max-width:720px;margin:0 auto 32px}
+.cta{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.small{font-size:14px;color:var(--muted);margin-top:14px}
+.shot{margin:56px auto 0;max-width:1000px;border-radius:20px;background:var(--surface);border:1px solid var(--border);box-shadow:var(--shadow);overflow:hidden}
+.shot .bar{display:flex;gap:7px;padding:12px 16px;border-bottom:1px solid var(--border);background:var(--surface2)}
+.shot .bar i{width:11px;height:11px;border-radius:50%;background:var(--border)}
+.shot img{width:100%;height:520px;object-fit:cover;object-position:top}
+@media (max-width:760px){ .shot img{height:300px} }
+/* sections */
+section{padding:84px 0}
+.eyebrow{font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+h2{font-size:clamp(28px,4vw,42px);letter-spacing:-.02em;line-height:1.15;margin:10px 0 14px;font-weight:800}
+.sub{color:var(--muted);max-width:680px;font-size:18px;margin:0 0 40px}
+.center{text-align:center}.center .sub{margin-left:auto;margin-right:auto}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+@media (max-width:900px){.grid{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.grid{grid-template-columns:1fr}}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:24px}
+.card .ic{font-size:28px;width:52px;height:52px;border-radius:14px;display:grid;place-items:center;background:var(--accent-soft);margin-bottom:14px}
+.card h3{margin:0 0 6px;font-size:19px}
+.card p{margin:0;color:var(--muted);font-size:16px}
+/* steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;counter-reset:s}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:600px){.steps{grid-template-columns:1fr}}
+.step{position:relative;padding-top:58px}
+.step:before{counter-increment:s;content:counter(s);position:absolute;top:22px;left:24px;width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,#5c6eff,#14b8a6);color:#fff;font-weight:700;display:grid;place-items:center;font-size:15px}
+.note{margin-top:22px;background:var(--accent-soft);border-radius:14px;padding:16px 20px;font-size:16px}
+.note b{color:var(--text)}
+/* tour */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin-bottom:22px}
+.tabs button{font:inherit;font-size:15px;font-weight:600;border:1px solid var(--border);background:var(--surface);color:var(--muted);padding:9px 18px;border-radius:999px;cursor:pointer}
+.tabs button.on{background:var(--text);color:var(--bg);border-color:var(--text)}
+.tour{display:grid;grid-template-columns:1.6fr 1fr;gap:28px;align-items:start}
+@media (max-width:900px){.tour{grid-template-columns:1fr}}
+.tour .frame{border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow);background:var(--surface);max-height:620px}
+.tour .frame img{width:100%}
+.tour h3{font-size:24px;margin:4px 0 10px}
+.tour ul{padding-left:20px;color:var(--muted);margin:0}
+.tour li{margin:8px 0}
+/* privacy / split */
+.split{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center}
+@media (max-width:900px){.split{grid-template-columns:1fr}}
+.check{list-style:none;padding:0;margin:0}
+.check li{padding:9px 0 9px 34px;position:relative;font-size:17px}
+.check li:before{content:"✓";position:absolute;left:0;top:8px;width:24px;height:24px;border-radius:50%;background:rgba(22,163,74,.14);color:var(--good);display:grid;place-items:center;font-weight:700;font-size:14px}
+.wrapped{max-width:380px;margin:0 auto;border-radius:22px;box-shadow:var(--shadow);transform:rotate(-2deg)}
+/* faq */
+details{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 22px;margin-bottom:12px}
+summary{cursor:pointer;font-weight:600;font-size:17px;list-style:none;display:flex;justify-content:space-between;gap:16px}
+summary::-webkit-details-marker{display:none}
+summary:after{content:"+";font-size:22px;line-height:1;color:var(--muted)}
+details[open] summary:after{content:"–"}
+details p{color:var(--muted);margin:12px 0 0}
+/* final cta */
+.final{background:linear-gradient(135deg,#2a2f7a,#0f5f68);color:#fff;border-radius:28px;padding:56px 32px;text-align:center}
+.final h2{color:#fff}.final p{color:rgba(255,255,255,.8);font-size:18px}
+.final .btn.primary{background:#fff;color:#1f2a7a;box-shadow:none}
+footer{padding:40px 0 60px;color:var(--muted);font-size:14px;text-align:center}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="brand" href="#"><img src="img/logo.png" alt="">Screen Time Tracker</a>
+  <div class="links"><a href="#features">Features</a><a href="#install">Install</a><a href="#tour">Tour</a><a href="guide.html">How to use</a><a href="#faq">FAQ</a></div>
+  <a class="btn primary nav-dl" href="https://github.com/sjaiswalnetwork/screen-time-tracker/releases/latest/download/ScreenTimeTracker.zip">Download</a>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <span class="pill"><b>●</b> Free · Windows 10 &amp; 11 · No account · 100% private</span>
+  <h1>See where your day <span>really goes</span>.</h1>
+  <p class="lead">Screen Time Tracker quietly notes how long you use your PC – every app, website, Google Sheet and file – plus when you logged in and out. Open it any time, or get a neat PDF report of any day.</p>
+  <div class="cta">
+    <a class="btn primary big" href="https://github.com/sjaiswalnetwork/screen-time-tracker/releases/latest/download/ScreenTimeTracker.zip">⬇&nbsp; Download for Windows</a>
+    <a class="btn ghost big" href="#install">How to install</a>
+  </div>
+  <p class="small">Free forever · about 2 MB · installs in under a minute · no admin rights needed</p>
+  <div class="shot"><div class="bar"><i></i><i></i><i></i></div><img src="img/day.png" alt="The Screen Time Tracker dashboard showing a day's screen time, timeline and apps"></div>
+</div></header>
+
+<section id="features"><div class="wrap">
+  <div class="center"><div class="eyebrow">What it does</div><h2>Everything about your PC time, in plain sight</h2>
+  <p class="sub">Install it once. It starts by itself in the background (if you want), and you can look at your day whenever you like.</p></div>
+  <div class="grid">
+    <div class="card"><div class="ic">⏱️</div><h3>Time on every app</h3><p>Chrome, Brave, Excel, Tally, WhatsApp, even Calculator – how long, how often, and when.</p></div>
+    <div class="card"><div class="ic">🌐</div><h3>Websites &amp; Google Sheets</h3><p>Not just "Chrome" – it shows which website, which sheet, which file you were actually on.</p></div>
+    <div class="card"><div class="ic">🕘</div><h3>Log-in &amp; log-out times</h3><p>When the PC started, when you began working, when you stopped – every day, even before you installed it.</p></div>
+    <div class="card"><div class="ic">📄</div><h3>PDF report of any day</h3><p>One click gives a clean report of today, any day, a week or a month – ready to save, print or share.</p></div>
+    <div class="card"><div class="ic">📊</div><h3>Day, week &amp; month views</h3><p>Timelines, charts, a calendar and a full activity log – hover over anything to see the details.</p></div>
+    <div class="card"><div class="ic">🎯</div><h3>Focus mode</h3><p>Hides YouTube, Instagram and other distractions for 25, 50 or 90 minutes. Gives you a focus score.</p></div>
+    <div class="card"><div class="ic">💼</div><h3>Clients &amp; timesheets</h3><p>Turns your screen time into hours per client or project, with amounts at your hourly rate.</p></div>
+    <div class="card"><div class="ic">✅</div><h3>Attendance</h3><p>Arrived, left, late, overtime – checked against your own work hours, month by month.</p></div>
+    <div class="card"><div class="ic">💧</div><h3>Healthy reminders</h3><p>Gentle nudges for breaks, eye rest (20-20-20), water, and a heads-up when it's getting late.</p></div>
+    <div class="card"><div class="ic">📞</div><h3>Calls &amp; meetings</h3><p>Knows when you're on a call, so meetings count – even when you're not typing.</p></div>
+    <div class="card"><div class="ic">🔍</div><h3>Search your history</h3><p>"When did I work on that invoice?" or "What was I doing at 3 PM on Tuesday?" – answered.</p></div>
+    <div class="card"><div class="ic">🔒</div><h3>Completely private</h3><p>Everything stays on your own PC. No account, no cloud, no keystrokes, no screenshots.</p></div>
+  </div>
+</div></section>
+
+<section id="install" style="background:var(--surface2)"><div class="wrap">
+  <div class="center"><div class="eyebrow">Install</div><h2>Ready in 4 easy steps</h2><p class="sub">No technical knowledge needed. You only do this once.</p></div>
+  <div class="steps">
+    <div class="card step"><h3>Download</h3><p>Click <b>Download for Windows</b>. A file called <b>ScreenTimeTracker.zip</b> arrives in your Downloads folder.</p></div>
+    <div class="card step"><h3>Extract</h3><p><b>Right-click</b> the zip file and choose <b>Extract All…</b>, then click <b>Extract</b>. A normal folder opens.</p></div>
+    <div class="card step"><h3>Install</h3><p>Double-click <b>Install Screen Time Tracker</b>. It takes a few seconds.</p></div>
+    <div class="card step"><h3>Choose</h3><p>Pick whether it should <b>start by itself every time you turn on your PC</b> (recommended). Done!</p></div>
+  </div>
+  <div class="note">🛡️ <b>Seeing a blue "Windows protected your PC" box?</b> That's normal for free apps from small makers. Click <b>More info</b>, then <b>Run anyway</b>. The app is open-source – anyone can read exactly what it does.</div>
+  <div class="note">🕐 <b>After installing</b>, look for the small clock icon near the time at the bottom-right of your screen (click the <b>^</b> arrow if it's hidden). Click it – or press <b>Ctrl + Alt + S</b> – to open your dashboard.</div>
+</div></section>
+
+<section id="tour"><div class="wrap">
+  <div class="center"><div class="eyebrow">Take a look</div><h2>A quick tour</h2></div>
+  <div class="tabs" id="tabs">
+    <button class="on" data-i="0">Day</button><button data-i="1">Week</button><button data-i="2">Month</button><button data-i="3">Log</button><button data-i="4">Work</button><button data-i="5">PDF report</button><button data-i="6">Dark mode</button>
+  </div>
+  <div class="tour">
+    <div class="frame"><img id="tourImg" src="img/day.png" alt=""></div>
+    <div><h3 id="tourTitle"></h3><ul id="tourList"></ul></div>
+  </div>
+</div></section>
+
+<section><div class="wrap split">
+  <div>
+    <div class="eyebrow">Private by design</div>
+    <h2>Your data never leaves your PC</h2>
+    <p class="sub">It's your time – so it stays yours.</p>
+    <ul class="check">
+      <li>Stored only on your computer, in small files you can see and delete</li>
+      <li>No sign-up, no account, no cloud, no ads</li>
+      <li>Never records what you type, screenshots, or passwords</li>
+      <li>Private / incognito browser windows are not named</li>
+      <li>Hide any app completely, or lock the dashboard with a PIN</li>
+      <li>Free and open-source – anyone can check the code</li>
+    </ul>
+  </div>
+  <div><img class="wrapped" src="img/wrapped.png" alt="A Screen Time Wrapped summary card"><p class="small center">Bonus: make a shareable "Screen Time Wrapped" card of your month.</p></div>
+</div></section>
+
+<section id="faq" style="padding-top:20px"><div class="wrap" style="max-width:820px">
+  <div class="center"><div class="eyebrow">Questions</div><h2>Good to know</h2></div>
+  <details><summary>Do I have to start it every day?</summary><p>No. During installation you choose whether it starts by itself when you turn on your PC. If you said yes, it just runs quietly in the background. You can change this any time: right-click the clock icon near the time and click <b>Start automatically with Windows</b>.</p></details>
+  <details><summary>Does it count time when I'm not at the PC?</summary><p>No. If you don't touch the keyboard or mouse for 5 minutes, it stops counting (and removes those 5 minutes). If a video or call is playing, it keeps counting – because you're watching or talking.</p></details>
+  <details><summary>How do I get a report?</summary><p>Open the dashboard and click the printer button at the top, or right-click the clock icon and choose <b>Export report (PDF)</b>. Pick a day, week, month or any dates. You can do this any time, even in the middle of the day.</p></details>
+  <details><summary>Will it slow down my computer?</summary><p>No. It checks which window is in front once a second – a tiny job. It uses about as much power as a clock.</p></details>
+  <details><summary>Which browsers does it understand?</summary><p>Chrome, Brave, Edge, Firefox, Opera and Vivaldi. It shows the website (like YouTube or Google Sheets) and the page or sheet name.</p></details>
+  <details><summary>Can I use it on my office and home PC?</summary><p>Yes. Install it on both. In Settings → Reports &amp; data, point both to a shared folder such as OneDrive to see everything together.</p></details>
+  <details><summary>How do I remove it?</summary><p>Windows Settings → Apps → Installed apps → Screen Time Tracker → Uninstall. It asks whether to keep or delete your history.</p></details>
+</div></section>
+
+<section style="padding-top:20px"><div class="wrap">
+  <div class="final">
+    <h2>Start seeing your day clearly</h2>
+    <p>Free, private and ready in a minute.</p>
+    <div class="cta" style="margin-top:26px">
+      <a class="btn primary big" href="https://github.com/sjaiswalnetwork/screen-time-tracker/releases/latest/download/ScreenTimeTracker.zip">⬇&nbsp; Download for Windows</a>
+      <a class="btn ghost big" style="background:transparent;color:#fff;border-color:rgba(255,255,255,.4)" href="guide.html">Read the guide</a>
+    </div>
+  </div>
+</div></section>
+
+<footer><div class="wrap">Screen Time Tracker · free &amp; open-source · <a href="https://github.com/sjaiswalnetwork/screen-time-tracker">View on GitHub</a> · <a href="guide.html">How to use</a></div></footer>
+
+<script>
+var tour = [
+  ["img/day.png","Day – your whole day at a glance",["Total screen time, and how it compares with your usual","Focus score, deep work and a summary in plain words","A timeline – hover to see exactly what you were doing","Websites, Google Sheets and files you spent time on","Every app – click one for its details, limits and category"]],
+  ["img/week.png","Week – patterns and log-in times",["Daily bars with your average","Log in, log out and hours for each day","Top apps, websites and categories of the week"]],
+  ["img/month.png","Month – a calendar of your screen time",["Darker days mean more screen time – click any day","Monthly totals, deep work and focus score","Make a monthly PDF or a shareable Wrapped card"]],
+  ["img/log.png","Log – a diary of your day",["Internet-synced clock and world clocks","When you logged in and out, and how long the PC was on","Every app, page and break in time order"]],
+  ["img/work.png","Work – clients, hours and attendance",["Hours per client or project, with amounts","Attendance: arrived, left, late, overtime","Offline work, focus sessions and calls"]],
+  ["img/report-1.png","PDF report – any day, any time",["One click from the dashboard or the tray icon","Day, week, month or any dates you choose","Log-in/out, summary, charts, apps, websites and the full log"]],
+  ["img/day-dark.png","Dark mode",["Follows your Windows theme, or choose light / dark in Settings"]]
+];
+function show(i){
+  document.getElementById("tourImg").src = tour[i][0];
+  document.getElementById("tourTitle").textContent = tour[i][1];
+  document.getElementById("tourList").innerHTML = tour[i][2].map(function(x){return "<li>"+x+"</li>";}).join("");
+  [].forEach.call(document.querySelectorAll("#tabs button"), function(b){ b.className = (+b.dataset.i === i) ? "on" : ""; });
+}
+document.getElementById("tabs").addEventListener("click", function(e){ if (e.target.dataset.i) show(+e.target.dataset.i); });
+show(0);
+</script>
+</body>
+</html>
