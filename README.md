@@ -18,7 +18,7 @@ A free, private app for Windows that shows **how long you use your PC**: every a
 
 <br><br>
 
-<img src="docs/img/day.png" width="860" alt="Screen Time Tracker dashboard">
+<img src="docs/img/hero.png" width="860" alt="Screen Time Tracker dashboard">
 
 </div>
 
