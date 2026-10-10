@@ -1,3 +1,5 @@
+<p align="center"><img src=".github/banner.svg" width="100%" alt="screen-time-tracker banner" /></p>
+
 <div align="center">
 
 <img src="docs/img/logo.png" width="96" alt="Screen Time Tracker logo">
